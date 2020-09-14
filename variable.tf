@@ -3,11 +3,11 @@ variable "users" {
 }
 
 variable "region" {
-  default = "us-east-1"
+  default = "us-east-2"
 }
 
 variable "az" {
-  default = ["us-east-1b","us-east-1c","us-east-1d"]
+  default = ["us-east-2b","us-east-2c","us-east-2d"]
 }
 variable "aws_launchcfg_name" {
   description = "aws launch config for ec2 ASG"
@@ -41,10 +41,18 @@ variable "aws_publicip" {
 
 variable "user_data" {
   description = "user data for apache script"
+  default = <<-EOF
+#!/bin/bash
+sudo yum -y update
+sudo yum install -y httpd
+sudo service httpd start
+echo '<!doctype html><html><head><title>CONGRATULATIONS!!..You are on your way to become a Terraform expert!</title><style>body {background-color: #1c87c9;}</style></head><body></body></html>' | sudo tee /var/www/html/index.html
+echo "<BR><BR>Terraform autoscaled app multi-cloud lab<BR><BR>" >> /var/www/html/index.html
+EOF
 }
 
 variable "vpc-block" {
-  default = "172.20.0.0/16"
+  default = "172.50.0.0/16"
 }
 
 
