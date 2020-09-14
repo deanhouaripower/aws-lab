@@ -31,7 +31,7 @@ resource "aws_security_group" "awsfw" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 }
-
+/*
 resource "aws_key_pair" "ssh" {
   key_name = "awspublickey"
   public_key = file("~/testec2.pub")
@@ -39,7 +39,7 @@ resource "aws_key_pair" "ssh" {
     env = "prod"
   }
 }
-
+*/
 resource "aws_autoscaling_group" "tfasg" {
   name = "tf-asg"
   max_size = 4
