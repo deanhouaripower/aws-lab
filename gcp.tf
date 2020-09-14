@@ -1,4 +1,4 @@
-
+/*
 //gcp compute config
   resource "google_compute_instance_template" "gcptemplate" {
   name = "gcp-template"
@@ -89,3 +89,5 @@ resource "google_compute_router" "internet" {
   region = "us-east4"
   depends_on = [google_compute_subnetwork.websubnet]
 }
+
+*/
