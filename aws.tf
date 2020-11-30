@@ -4,7 +4,9 @@ resource "aws_launch_configuration" "awslaunch" {
   instance_type = "t2.micro"
   security_groups = [aws_security_group.awsfw.id]
   associate_public_ip_address = var.aws_publicip
-  #user_data = var.user_data
+  key_name = aws_key_pair.ssh.key_name
+  user_data = var.user_data
+ 
 }
 
 resource "aws_security_group" "awsfw" {
@@ -34,7 +36,7 @@ resource "aws_security_group" "awsfw" {
 /*
 resource "aws_key_pair" "ssh" {
   key_name = "awspublickey"
-  public_key = file("~/testec2.pub")
+  public_key = file("~/testec2.pub") ##please use your public key 
   tags = {
     env = "prod"
   }
@@ -121,53 +123,3 @@ resource "aws_route" "tfroute" {
   gateway_id = aws_internet_gateway.igw.id
 }
 
-/*
-resource "aws_codebuild_project" "lab-cicd" {
-  name = "lab-cicd-project"
-  service_role = "codebuild-iam-service-role"
-
-  artifacts {
-    type = "NO_ARTIFACTS"
-  }
-
-  environment {
-    compute_type = "BUILD_GENERAL1_SMALL"
-    image = "aws/codebuild/standard:1.0"
-    type = "LINUX_CONTAINER"
-
-    dynamic "environment_variable"{
-      for_each = [{name="mykeys",value="keys.json"},
-        {name="mycreds",value="creds.json"},
-        {name="data",value="mydata.json"}]
-
-      content{
-        name = environment_variable.value.name
-        value = environment_variable.value.value
-      }
-
-    }
-  }
-
-
-    environment_variable {
-      name = "mykeys"
-      value = "keys.json"
-    }
-
-    environment_variable {
-      name = "mycreds"
-      value = "creds.json"
-    }
-
-    environment_variable {
-      name = "data"
-      value = "mydata.json"
-    }
-  }
-
-  source {
-    type = "GITHUB"
-    location = "https://github.com/dhouari"
-  }
-}
-*/
